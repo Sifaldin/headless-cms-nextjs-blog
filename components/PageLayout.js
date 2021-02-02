@@ -1,7 +1,6 @@
 import NavbarCmp from 'components/NavbarCmp';
 import { Container } from 'react-bootstrap'
 
-
 export default function PageLayout({ children, className }) {
   return (
     <Container>
