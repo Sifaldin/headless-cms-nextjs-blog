@@ -1,4 +1,5 @@
 import { Card } from 'react-bootstrap';
+import Link from 'next/link';
 
 export default function CardItem({
   title,
@@ -6,7 +7,8 @@ export default function CardItem({
   date,
   coverImage,
   author,
-  avatar }) {
+  avatar,
+  link }) {
   return (
     <Card className={`fj-card`}>
       <div className="card-body-wrapper">
@@ -34,9 +36,16 @@ export default function CardItem({
           <Card.Text>{subtitle}</Card.Text>
         </Card.Body>
       </div>
-      <a className="card-button">
-        Read More
-                </a>
+
+      {link &&
+        <Link {...link}>
+          <a className="card-button">
+            Read More
+          </a>
+        </Link>
+      }
+
+
     </Card>
   )
 }
