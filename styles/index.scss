@@ -148,7 +148,7 @@ body {
       letter-spacing: 1px;
       font-weight: bold;
 
-      a{
+      a {
         color: black;
         font-weight: bold;
       }
@@ -233,6 +233,16 @@ body {
 .blog-image {
   margin-bottom: 10px;
   text-align: center;
+
+  &-left {
+    float: left;
+    margin-right: 30px;
+  }
+  
+  &-right {
+    float: right;
+    margin-left: 30px;
+  }
 }
 .image-alt {
   margin-top: 3px;

@@ -1,5 +1,6 @@
 import { Card } from 'react-bootstrap';
 import Link from 'next/link';
+import { urlFor } from 'lib/api';
 
 export default function CardItem({
   title,
@@ -27,7 +28,7 @@ export default function CardItem({
         </Card.Header>
         <div className="view overlay">
           <Card.Img
-            src={coverImage}
+            src={urlFor(coverImage).height(400).crop('center').fit('max').url()}
             alt="Card image cap"
           />
         </div>
