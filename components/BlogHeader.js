@@ -1,4 +1,6 @@
-export default function BlogHeader({blog}) {
+import { urlFor } from "lib/api";
+
+export default function BlogHeader({ blog }) {
   return (
     <div className="blog-detail-header">
       <p className="lead mb-0">
@@ -13,10 +15,9 @@ export default function BlogHeader({blog}) {
       </p>
       <h1 className="font-weight-bold blog-detail-header-title mb-0">{blog.title}</h1>
       <h2 className="blog-detail-header-subtitle mb-3">{blog.subtitle}</h2>
-      <img
-        className="img-fluid rounded"
-        src={blog.coverImage} alt="" />
-
+      <div className="blog-image">
+        <img className="img-fluid rounded" src={urlFor(blog.coverImage).height(600).fit('max').url()} alt="" />
+      </div>
     </div>
   )
 }
