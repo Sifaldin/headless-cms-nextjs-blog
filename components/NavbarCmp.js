@@ -1,7 +1,8 @@
 import { Navbar, Nav } from 'react-bootstrap';
 import Link from 'next/link';
+import ThemeToggle from 'components/ThemeToggle';
 
-export default function NavbarCmp() {
+export default function NavbarCmp({theme, toggleTheme}) {
   return (
     <Navbar
       className="fj-navbar fj-nav-base"
@@ -16,6 +17,7 @@ export default function NavbarCmp() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
+        <ThemeToggle onChange={toggleTheme} />
           <Nav.Link  href='/'
             as={() =>
               <Link href='/'>

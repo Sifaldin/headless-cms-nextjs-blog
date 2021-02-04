@@ -7,12 +7,25 @@ import {
   faList,
   faBorderAll,
   faSortNumericDown,
-  faSortNumericUp
+  faSortNumericUp,
+  faSun,
+  faMoon
 } from '@fortawesome/free-solid-svg-icons';
+import "react-toggle/style.css";
+import ThemeProvider from 'providers/ThemeProvider';
+
 
 config.autoAddCss = false;
-library.add(faList, faBorderAll, faSortNumericDown, faSortNumericUp)
+library.add(
+  faSun,
+  faMoon,
+  faList,
+  faBorderAll,
+  faSortNumericDown,
+  faSortNumericUp);
 
 export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (<ThemeProvider>
+          <Component {...pageProps} />
+         </ThemeProvider>)
 }
