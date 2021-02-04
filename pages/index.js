@@ -1,71 +1,55 @@
+import { useGetBlogsPages } from 'actions/pagination';
 import AuthorIntro from 'components/AuthorIntro';
-import CardItem from 'components/CardItem';
-import CardListItem from 'components/CardListItem';
 import FilteringMenu from 'components/FilteringMenu';
 import PageLayout from 'components/PageLayout';
-import { getAllBlogs } from 'lib/api';
-import { Row, Col } from 'react-bootstrap';
+import { getAllBlogs, getPaginatedBlogs } from 'lib/api';
 import { useState } from 'react';
-import { useGetBlogs } from 'actions';
+import { Row, Button } from 'react-bootstrap';
 
-export default function home({ blogs: initialData }) {
+export default function home({ blogs }) {
   const [filter, setFilter] = useState({
-    view: { list: 0 }
+    view: { list: 0 },
+    date: { asc: 0 }
   });
 
-  //client side
-  const { data: blogs, error } = useGetBlogs(initialData);
-
+  const {
+    pages,
+    isLoadingMore,
+    isReachingEnd,
+    loadMore
+  } = useGetBlogsPages({ blogs, filter });
 
   return (
     <PageLayout>
       <AuthorIntro />
       <FilteringMenu
         filter={filter}
-        onChange={(option, value) => {
+        onChange={(option, value) =>
           setFilter({ ...filter, [option]: value })
-        }} />
+        } />
       <hr />
       <Row className="mb-5">
-        {blogs.map(blog =>
-          filter.view.list ?
-            <Col key={`${blog.slug}-list`} md="9">
-              <CardListItem
-                title={blog.title}
-                subtitle={blog.subtitle}
-                date={blog.date}
-                coverImage={blog.coverImage}
-                author={blog.author?.name}
-                avatar={blog.author?.avatar || 'https://via.placeholder.com/150'}
-                link={{
-                  href: '/blogs/[slug]',
-                  as: `/blogs/${blog.slug}`
-                }} />
-            </Col>
-            :
-            <Col key={blog.slug} md="4">
-              <CardItem
-                title={blog.title}
-                subtitle={blog.subtitle}
-                date={blog.date}
-                coverImage={blog.coverImage}
-                author={blog.author?.name}
-                avatar={blog.author?.avatar || 'https://via.placeholder.com/150'}
-                link={{
-                  href: '/blogs/[slug]',
-                  as: `/blogs/${blog.slug}`
-                }}
-              />
-            </Col>)
-        }
+        {pages}
       </Row>
+      <div style={{ textAlign: 'center' }}>
+
+        <Button
+          onClick={loadMore}
+          disabled={isReachingEnd || isLoadingMore}
+          variant="outline-secondary"
+          size="lg">
+          {isLoadingMore ? '...' : isReachingEnd ? 'No More blogs' : 'More Blogs'}
+        </Button>
+
+      </div>
+
     </PageLayout>
   )
 }
 
 // this function is called during build time. create static page, provides props
 export async function getStaticProps() {
-  const blogs = await getAllBlogs();
+  const blogs = await getPaginatedBlogs({ offset: 0, date: 'desc'});
   return {
     props: {
       blogs

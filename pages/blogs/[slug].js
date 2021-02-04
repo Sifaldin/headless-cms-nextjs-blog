@@ -11,7 +11,7 @@ export default function BlogDetail({ blog }) {
         <Col md={{ span: 10, offset: 1 }}>
           <BlogHeader blog={blog} />
           <hr />
-          <BlogContent blog={blog} />
+          {blog.content && <BlogContent blog={blog} />}
         </Col>
       </Row>
     </PageLayout>

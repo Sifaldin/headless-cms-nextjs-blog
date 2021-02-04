@@ -1,4 +1,5 @@
 import { urlFor } from "lib/api";
+import moment from 'moment'; 
 
 export default function BlogHeader({ blog }) {
   return (
@@ -11,12 +12,12 @@ export default function BlogHeader({ blog }) {
           width="50px"
           alt="avatar" />
         {blog.author?.name}
-        {', '} {blog.date}
+        {', '} {moment(blog.date).format('LLLL')}
       </p>
       <h1 className="font-weight-bold blog-detail-header-title mb-0">{blog.title}</h1>
       <h2 className="blog-detail-header-subtitle mb-3">{blog.subtitle}</h2>
       <div className="blog-image">
-        <img className="img-fluid rounded" src={urlFor(blog.coverImage).height(600).fit('max').url()} alt="" />
+        {blog.coverImage && <img className="img-fluid rounded" src={urlFor(blog.coverImage).height(600).fit('max').url()} alt="" />}
       </div>
     </div>
   )
